@@ -1,0 +1,416 @@
+/* Fonte Orbitron importada direto no HTML, então não precisa aqui */
+
+/* Reset básico */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo do site */
+body {
+  background-color: #000000; /* Preto absoluto */
+  color: #00ff88; /* Verde neon */
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+}
+
+/* Container principal para centralizar o conteúdo */
+main {
+  flex-grow: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 25px 15px 50px 15px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #111111;
+  border-bottom: 3px solid #00ff88;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 255, 136, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Título do header */
+header h1 {
+  font-size: 2.8rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #00ff88;
+  text-shadow:
+    0 0 5px #00ff88,
+    0 0 10px #00ff88,
+    0 0 15px #00ff88,
+    0 0 20px #00ff88;
+}
+
+/* Texto secundário do header */
+header p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #00ff88cc;
+  letter-spacing: 0.5px;
+  font-style: italic;
+  text-shadow: 0 0 5px #00ff8844;
+}
+
+/* Navegação */
+nav {
+  background-color: #080808;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px 10px;
+  box-shadow: inset 0 -3px 8px #00ff8866;
+  user-select: none;
+  border-bottom: 2px solid #00ff88aa;
+}
+
+/* Botões da nav */
+nav button {
+  background-color: #00ff88;
+  border: none;
+  border-radius: 8px;
+  color: #000000;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 12px 22px;
+  transition: all 0.3s ease;
+  flex-grow: 1;
+  max-width: 160px;
+  box-shadow:
+    0 4px 8px rgba(0, 255, 136, 0.5),
+    inset 0 -2px 5px #00cc6688;
+  user-select: none;
+  letter-spacing: 1px;
+}
+
+/* Hover e ativo */
+nav button:hover,
+nav button.active {
+  background-color: #00cc66;
+  box-shadow:
+    0 6px 14px rgba(0, 204, 102, 0.8),
+    inset 0 -3px 7px #009944cc;
+  transform: scale(1.05);
+  color: #e0ffe0;
+}
+
+/* Seções */
+section {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* Seção ativa */
+section.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Container de formulários e textos */
+.form-container {
+  background-color: #111111;
+  border-radius: 15px;
+  padding: 25px 25px 30px 25px;
+  box-shadow:
+    0 0 20px #00ff88,
+    inset 0 0 15px #00ff88;
+  margin-bottom: 40px;
+  user-select: text;
+  border: 1px solid #00ff8844;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Hover efeito container (leve) */
+.form-container:hover {
+  box-shadow:
+    0 0 30px #00ff88cc,
+    inset 0 0 25px #00ff88cc;
+}
+
+/* Títulos principais */
+h2 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #00ff88;
+  padding-bottom: 10px;
+  letter-spacing: 1px;
+  color: #00ff88;
+  text-shadow: 0 0 6px #00ff88aa;
+  user-select: text;
+}
+
+/* Inputs e selects */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  padding: 14px 12px;
+  margin: 10px 0 20px 0;
+  border-radius: 8px;
+  border: none;
+  background-color: #222222;
+  color: #00ff88;
+  font-size: 1.1rem;
+  font-family: 'Orbitron', sans-serif;
+  outline: none;
+  box-shadow: inset 0 0 5px #00ff88;
+  transition: background-color 0.3s ease;
+  resize: vertical;
+  user-select: text;
+  letter-spacing: 0.5px;
+}
+
+/* Focus inputs */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus {
+  background-color: #333333;
+  box-shadow: inset 0 0 8px #00ff88, 0 0 10px #00ff88;
+}
+
+/* Textarea altura */
+textarea {
+  min-height: 100px;
+}
+
+/* Botão principal */
+.btn {
+  background-color: #00ff88;
+  color: #000000;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  box-shadow:
+    0 4px 12px rgba(0, 255, 136, 0.75),
+    inset 0 -2px 7px #00cc6688;
+}
+
+/* Hover botão */
+.btn:hover {
+  background-color: #00cc66;
+  transform: scale(1.05);
+  box-shadow:
+    0 6px 18px rgba(0, 204, 102, 0.9),
+    inset 0 -3px 9px #009944cc;
+}
+
+/* Listas básicas */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  user-select: text;
+}
+
+/* Itens de lista */
+ul li {
+  font-size: 1.2rem;
+  margin: 12px 0;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: #111111;
+  box-shadow: inset 0 0 10px #00ff88cc;
+  transition: background-color 0.3s ease;
+}
+
+/* Itens hover */
+ul li:hover {
+  background-color: #222222;
+  box-shadow:
+    0 0 12px #00ff88dd,
+    inset 0 0 15px #00ff88dd;
+}
+
+/* Links */
+a {
+  color: #00ff88;
+  text-decoration: none;
+  font-weight: 700;
+  user-select: text;
+}
+
+/* Link hover */
+a:hover {
+  text-decoration: underline;
+  color: #00cc66;
+  cursor: pointer;
+}
+
+/* Rodapé */
+footer {
+  background-color: #111111;
+  color: #00ff88;
+  text-align: center;
+  padding: 15px 10px;
+  border-top: 3px solid #00ff88;
+  font-size: 1rem;
+  user-select: none;
+  box-shadow: inset 0 3px 10px #00ff8844;
+}
+
+/* Scroll bar customizada */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ff88;
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px #009944;
+}
+
+/* Labels para inputs */
+label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  user-select: text;
+  display: block;
+  margin-bottom: 6px;
+  color: #00ff88dd;
+  letter-spacing: 0.5px;
+}
+
+/* Mensagem de erro/sucesso */
+#msg-agendamento {
+  margin-top: 15px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  min-height: 24px;
+  user-select: none;
+  color: #00ff88;
+  text-align: center;
+  text-shadow: 0 0 5px #00ff88cc;
+}
+
+/* Lista de agendamentos da pessoa */
+#lista-shows-agendados {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 10px;
+  border: 1px solid #00ff88;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px #00ff88cc;
+}
+
+/* Itens agendamentos */
+#lista-shows-agendados li {
+  padding: 10px 10px;
+  border-bottom: 1px solid #00ff88;
+  transition: background-color 0.3s ease;
+  user-select: text;
+}
+
+/* Último item não tem borda */
+#lista-shows-agendados li:last-child {
+  border-bottom: none;
+}
+
+/* Lista avaliações */
+#avaliacoes-lista li {
+  border: 1px solid #00ff88;
+  padding: 15px 18px;
+  margin: 12px 0;
+  border-radius: 12px;
+  background-color: #111111;
+  box-shadow: 0 0 10px #00ff88cc;
+  font-size: 1.1rem;
+  user-select: text;
+  line-height: 1.4;
+  font-weight: 600;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Avaliações hover */
+#avaliacoes-lista li:hover {
+  box-shadow: 0 0 20px #00ff88dd;
+}
+
+/* Nome dos avaliadores */
+.avaliador-nome {
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: #00ff88;
+  margin-bottom: 6px;
+  text-shadow: 0 0 10px #00ff88aa;
+  user-select: text;
+}
+
+/* Avaliação texto */
+.avaliacao-texto {
+  font-style: italic;
+  color: #aaffbb;
+  user-select: text;
+}
+
+/* Responsividade mobile */
+@media (max-width: 700px) {
+  nav {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  nav button {
+    max-width: 100%;
+  }
+
+  .form-container {
+    padding: 20px 15px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Responsividade super pequena */
+@media (max-width: 400px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  nav button {
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
+}
