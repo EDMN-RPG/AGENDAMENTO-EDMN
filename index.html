@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agenda de Shows - DJ EDMN</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #000;
+    color: #00ff88;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: #111;
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 3px solid #00ff88;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+  }
+  header p {
+    font-size: 1.2rem;
+    margin: 8px 0 0 0;
+    font-weight: 600;
+  }
+  nav {
+    background: #080808;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px 10px;
+    flex-wrap: wrap;
+  }
+  nav button {
+    background: #00ff88;
+    border: none;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-grow: 1;
+    max-width: 160px;
+  }
+  nav button:hover,
+  nav button.active {
+    background-color: #00cc66;
+  }
+  main {
+    flex-grow: 1;
+    padding: 25px 15px 50px 15px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  section {
+    display: none;
+    animation: fadeIn 0.6s ease forwards;
+  }
+  section.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  .form-container {
+    background: #111;
+    padding: 25px 25px 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00ff88;
+    margin-bottom: 40px;
+  }
+  h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 2rem;
+    border-bottom: 2px solid #00ff88;
+    padding-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  input[type="time"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 14px 12px;
+    margin: 10px 0 20px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #222;
+    color: #00ff88;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', sans-serif;
+    resize: vertical;
+    outline: none;
+    box-shadow: inset 0 0 5px #00ff88;
+    transition: background-color 0.3s ease;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="date"]:focus,
+  input[type="time"]:focus,
+  select:focus,
+  textarea:focus {
+    background-color: #333;
+  }
+  textarea {
+    min-height: 100px;
+  }
+  .btn {
+    background-color: #00ff88;
+    color: #000;
+    font-weight: 700;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  .btn:hover {
+    background-color: #00cc66;
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  ul li {
+    margin: 12px 0;
+    font-size: 1.2rem;
+  }
+  a {
+    color: #00ff88;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  footer {
+    background: #111;
+    color: #00ff88;
+    text-align: center;
+    padding: 15px 10px;
+    border-top: 3px solid #00ff88;
+    font-size: 1rem;
+  }
+  /* Scroll bar estilizada */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #111;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #00ff88;
+    border-radius: 10px;
+  }
+  /* Responsive */
+  @media(max-width: 600px) {
+    nav button {
+      max-width: 100%;
+    }
+  }
+  /* Mensagem aviso */
+  #msg-agendamento {
+    margin-top: 15px;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  /* Agendamentos list */
+  #lista-shows-agendados {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 10px;
+    border: 1px solid #00ff88;
+    border-radius: 10px;
+  }
+  #lista-shows-agendados li {
+    padding: 10px 10px;
+    border-bottom: 1px solid #00ff88;
+  }
+  #lista-shows-agendados li:last-child {
+    border-bottom: none;
+  }
+  /* Avaliações */
+  #avaliacoes-lista li {
+    border: 1px solid #00ff88;
+    padding: 15px 18px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    background: #111;
+  }
+  #avaliacoes-lista strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.15rem;
+    color: #00ff88;
+  }
+  /* Form label */
+  label {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎧 Agenda de Shows — DJ EDMN</h1>
+  <p>Reserve aqui o seu evento com uma vibe inesquecível</p>
+</header>
+
+<nav>
+  <button id="btn-agendamento" class="active">Agendar Show</button>
+  <button id="btn-avaliacoes">Avaliações</button>
+  <button id="btn-horarios">Horários Disponíveis</button>
+  <button id="btn-contato">Contato</button>
+  <button id="btn-sobre">Sobre o EDMN</button>
+</nav>
+
+<main>
+  <!-- Agendamento -->
+  <section id="agendamento" class="active">
+    <div class="form-container">
+      <h2>📅 Formulário de Agendamento</h2>
+      <label for="nome">Seu nome ou nome do evento</label>
+      <input type="text" id="nome" placeholder="Digite seu nome ou nome do evento" />
+      <label for="email">Seu e-mail</label>
+      <input type="email" id="email" placeholder="Digite seu e-mail" />
+      <label for="local">Local do evento</label>
+      <input type="text" id="local" placeholder="Ex: Clube XYZ" />
+      <label for="data">Data do evento</label>
+      <input type="date" id="data" />
+      <label for="hora">Hora do evento</label>
+      <input type="time" id="hora" />
+      <label for="tipo">Tipo de evento</label>
+      <select id="tipo">
+        <option value="">Selecione o tipo de evento</option>
+        <option value="Festa">Festa (R$350)</option>
+        <option value="Festival">Festival (R$700)</option>
+        <option value="Show Privado">Show Privado (R$500)</option>
+        <option value="Outro">Outro (R$300)</option>
+      </select>
+      <label for="mensagem">Observações, estrutura, público esperado, etc.</label>
+      <textarea id="mensagem" placeholder="Detalhes adicionais..."></textarea>
+      <button class="btn" onclick="enviarAgendamento()">Solicitar Agendamento</button>
+      <p id="msg-agendamento"></p>
+    </div>
+    <div class="form-container">
+      <h2>🗒️ Seus Agendamentos</h2>
+      <ul id="lista-shows-agendados"></ul>
+    </div>
+  </section>
+
+  <!-- Avaliações -->
+  <section id="avaliacoes">
+    <div class="form-container">
+      <h2>💬 Avaliações dos fãs</h2>
+      <ul id="avaliacoes-lista">
+        <li><strong>Lucas_91:</strong> Show muito top! A vibe do EDMN é surreal, quero ver de novo logo.</li>
+        <li><strong>KaioRock:</strong> A mistura das luzes verdes com a música eletrônica é simplesmente perfeita.</li>
+        <li><strong>Juh_Baiano:</strong> O DJ é misterioso e o som faz qualquer festa explodir! Super recomendo.</li>
+        <li><strong>Mikaela15:</strong> Já fui em três shows, e cada vez fico mais impressionada com a energia da galera.</li>
+        <li><strong>Vini_Fox:</strong> Som de qualidade e interação com o público nota mil! EDMN mandou bem demais.</li>
+        <li><strong>Rafa_Star:</strong> Aquele “EDMN no beat” é meu bordão favorito agora, me sinto na pista o tempo todo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Horários Disponíveis -->
+  <section id="horarios">
+    <div class="form-container">
+      <h2>🕐 Horários Disponíveis para Shows</h2>
+      <ul>
+        <li>Segunda a Sexta: após 19h</li>
+        <li>Sábados: qualquer horário</li>
+        <li>Domingos: apenas até 22h</li>
+        <li>Feriados: consultar disponibilidade</li>
+      </ul>
+      <p>Agende com antecedência para garantir sua data!</p>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato">
+    <div class="form-container">
+      <h2>📲 Fale com a equipe EDMN</h2>
+      <p>Para dúvidas ou parcerias, entre em contato:</p>
+      <ul>
+        <li>Email: <a href="mailto:victorklackek7@gmail.com">victorklackek7@gmail.com</a></li>
+        <li>Instagram: <a href="https://instagram.com/edmn.dj" target="_blank">@edmn.dj</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sobre EDMN -->
+  <section id="sobre">
+    <div class="form-container">
+      <h2>🎧 Quem é EDMN?</h2>
+      <p>
+        DJ EDMN é um artista mascarado, enigmático e apaixonado por criar atmosferas eletrônicas únicas.
+        Com shows marcados por LEDs verdes, efeitos especiais e mixagens que levam o público ao delírio,
+        EDMN leva sua identidade misteriosa a cada apresentação.
+      </p>
+      <p>
+        Inspirado em grandes nomes como LIU, ele acredita no poder da música eletrônica como experiência sensorial,
+        e transforma cada evento em um espetáculo audiovisual inesquecível.
+      </p>
+      <p style="text-align:center; font-weight:bold; color:#00ff88; font-size:1.4em; margin-top: 30px;">
+        🟢 EDMN no beat!
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 - Site Oficial de Agendamentos do DJ EDMN</p>
+</footer>
+
+<script>
+  // Navegação abas
+  const botoes = document.querySelectorAll('nav button');
+  const secoes = document.querySelectorAll('main section');
+
+  function ativarSecao(id) {
+    secoes.forEach(sec => {
+      if (sec.id === id) sec.classList.add('active');
+      else sec.classList.remove('active');
+    });
+    botoes.forEach(btn => {
+      if (btn.id === 'btn-' + id) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+  }
+
+  botoes.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.id.replace('btn-', '');
+      ativarSecao(id);
+      limparMensagem();
+      mostrarAgendamentos();
+    });
+  });
+
+  ativarSecao('agendamento'); // inicial
+
+  // Função para limpar mensagem de erro/sucesso
+  function limparMensagem() {
+    const msg = document.getElementById('msg-agendamento');
+    if(msg) msg.textContent = '';
+  }
+
+  // Pega valor conforme tipo evento
+  function getValorEvento(tipo) {
+    switch(tipo) {
+      case 'Festa': return 350;
+      case 'Festival': return 700;
+      case 'Show Privado': return 500;
+      case 'Outro': return 300;
+      default: return 0;
+    }
+  }
+
+  // Enviar agendamento para WhatsApp e salvar localStorage
+  function enviarAgendamento() {
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const local = document.getElementById('local').value.trim();
+    const data = document.getElementById('data').value;
+    const hora = document.getElementById('hora').value;
+    const tipo = document.getElementById('tipo').value;
+    const mensagem = document.getElementById('mensagem').value.trim();
+
+    if (!nome || !email || !local || !data || !hora || !tipo) {
+      mostrarMensagem('⚠️ Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    // Validação data (não aceitar datas passadas)
+    const hoje = new Date();
+    const dataEvento = new Date(data + 'T' + hora);
+    if (dataEvento < hoje) {
+      mostrarMensagem('⛔ A data e hora do evento não podem ser anteriores ao momento atual.');
+      return;
+    }
+
+    // Cria objeto do agendamento
+    const agendamento = {
+      nome,
+      email,
+      local,
+      data,
+      hora,
+      tipo,
+      mensagem,
+      valor: getValorEvento(tipo),
+      timestamp: Date.now()
+    };
+
+    // Salva no localStorage (por email para separar agendamentos por pessoa)
+    let todosAgendamentos = JSON.parse(localStorage.getItem('agendamentos')) || {};
+    if(!todosAgendamentos[email]) todosAgendamentos[email] = [];
+    todosAgendamentos[email].push(agendamento);
+    localStorage.setItem('agendamentos', JSON.stringify(todosAgendamentos));
+
+    // Abre whatsapp com texto formatado
+    const texto = `🎧 *NOVO AGENDAMENTO* 🎧\n\n` +
+      `👤 Nome/Evento: ${nome}\n` +
+      `📍 Local: ${local}\n` +
+      `📅 Data: ${data}\n` +
+      `⏰ Hora: ${hora}\n` +
+      `📀 Tipo: ${tipo}\n` +
+      `💰 Valor estimado: R$ ${agendamento.valor}\n` +
+      `📨 E-mail: ${email}\n\n` +
+      `📝 Obs: ${mensagem}`;
+
+    const linkWhats = `https://wa.me/5542999865245?text=${encodeURIComponent(texto)}`;
+    window.open(linkWhats, '_blank');
+
+    mostrarMensagem('✅ Agendamento enviado e salvo localmente!');
+    limparFormulario();
+    mostrarAgendamentos();
+  }
+
+  // Mostrar mensagem de status
+  function mostrarMensagem(texto) {
+    const msg = document.getElementById('msg-agendamento');
+    if (msg) msg.textContent = texto;
+  }
+
+  // Limpa formulário
+  function limparFormulario() {
+    document.getElementById('nome').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('local').value = '';
+    document.getElementById('data').value = '';
+    document.getElementById('hora').value = '';
+    document.getElementById('tipo').value = '';
+    document.getElementById('mensagem').value = '';
+  }
+
+  // Mostrar agendamentos da pessoa pelo email atual digitado
+  function mostrarAgendamentos() {
+    const email = document.getElementById('email').value.trim();
+    const lista = document.getElementById('lista-shows-agendados');
+    lista.innerHTML = '';
+
+    if (!email) {
+      lista.innerHTML = '<li>Informe seu e-mail acima para ver seus agendamentos.</li>';
+      return;
+    }
+    let todosAgendamentos = JSON.parse(localStorage.getItem('agendamentos')) || {};
+    let agendamentosPessoa = todosAgendamentos[email];
+    if (!agendamentosPessoa || agendamentosPessoa.length === 0) {
+      lista.innerHTML = '<li>Nenhum agendamento encontrado para este e-mail.</li>';
+      return;
+    }
+
+    agendamentosPessoa.sort((a,b) => a.timestamp - b.timestamp);
+
+    agendamentosPessoa.forEach(ag => {
+      // Formata data e hora
+      let dt = new Date(ag.data + 'T' + ag.hora);
+      let dtStr = dt.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'});
+      let hrStr = ag.hora;
+
+      const li = document.createElement('li');
+      li.textContent = `${dtStr} ${hrStr} — ${ag.tipo} — Local: ${ag.local} — Valor: R$ ${ag.valor}`;
+      lista.appendChild(li);
+    });
+  }
+
+  // Atualiza lista de agendamentos quando email mudar
+  document.getElementById('email').addEventListener('input', mostrarAgendamentos);
+
+  // Quando a página carregar
+  window.addEventListener('load', () => {
+    mostrarAgendamentos();
+  });
+</script>
+
+</body>
+</html>
